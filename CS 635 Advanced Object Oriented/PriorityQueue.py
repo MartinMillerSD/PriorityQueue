@@ -117,6 +117,7 @@ List.add_to_list("Jack",123456789, "email@sdsu.edu","123 Fake St",40.0,40.0)
 #This is a work of git
 #still not working
 #still trying to get a change
+#things setup now?
 
 
 #List.pop()
