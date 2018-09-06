@@ -36,7 +36,7 @@ class TestPriorityQueue(unittest.TestCase):
         
 
     def tearDown(self):
-        pass
+        pass 
 
 
     def test_add_to_list(self):
@@ -89,6 +89,7 @@ class TestPriorityQueue(unittest.TestCase):
         #for x in self.List.master_list:
         #    self.List.add_to_list(2,123456789,"email@sdsu.edu","123 Fake St",4.0,10)
         #    self.assertFalse(type(int(x.name)) == type("string"))
+        ##
 
     def test_pop(self):
         lengthlist_before_pop = len(self.List.master_list)
