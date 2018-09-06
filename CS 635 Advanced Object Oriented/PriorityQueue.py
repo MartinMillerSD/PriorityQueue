@@ -4,12 +4,8 @@
 
 class PriorityQueue:
 
-    
-    #list_length = 0.0
-
     def __init__(self):
-        #self.master_list = position
-        #self.rank = 0
+
         self.master_list = []
         self.insertion_number = 0
         return
@@ -97,7 +93,7 @@ class Students:
 
 List = PriorityQueue()
 List.add_to_list("Delta",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
-List.add_to_list("Echo",123456789, "email@sdsu.edu","123 Fake St",1.2,50.0)
+List.add_to_list("Echo",123456789, "email@sdsu.edu","123 Fake St",1.2,50.0) 
 List.add_to_list("Indigo",123456789, "email@sdsu.edu","123 Fake St",3.2,80.0)
 #List.add_to_list("Helo",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0)
 #List.add_to_list("SuperAlpha",123456789, "email@sdsu.edu","123 Fake St",0.8,00.0)
