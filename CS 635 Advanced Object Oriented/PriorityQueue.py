@@ -15,9 +15,10 @@ class PriorityQueue:
         return
 
     def add_to_list(self, name, redID, email, address, GPA, numberOfUnitsTaken):
-        if GPA > 4.0 or GPA < 0.0 or numberOfUnitsTaken > 150 or numberOfUnitsTaken < 0.0:
-            #print("faill!")
-            return
+        if GPA > 4.0 or GPA < 0.0:
+            raise ValueError("The GPA is too high or too low!")
+        elif numberOfUnitsTaken > 150 or numberOfUnitsTaken < 0.0:
+            raise ValueError("The number of units taken is too high or too low!")
 
 
         self.insertion_number = self.binary_search(0,self.list_length(),GPA,numberOfUnitsTaken)
@@ -98,20 +99,38 @@ List = PriorityQueue()
 List.add_to_list("Delta",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
 List.add_to_list("Echo",123456789, "email@sdsu.edu","123 Fake St",1.2,50.0)
 List.add_to_list("Indigo",123456789, "email@sdsu.edu","123 Fake St",3.2,80.0)
-List.add_to_list("Helo",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0)
-List.add_to_list("SuperAlpha",123456789, "email@sdsu.edu","123 Fake St",0.8,00.0)
-List.add_to_list("Gamma",123456789, "email@sdsu.edu","123 Fake St",3.8,50.0)
-List.add_to_list("Charlie",123456789, "email@sdsu.edu","123 Fake St",1.6,30.0)
-List.add_to_list("Bravo",123456789, "email@sdsu.edu","123 Fake St",1.8,20.0)
-List.add_to_list("Gamma2",123456789, "email@sdsu.edu","123 Fake St",3.1,60.0)
-List.add_to_list("SuperIndigo",123456789, "email@sdsu.edu","123 Fake St",3.1,150.0)
-List.add_to_list("Fox",123456789, "email@sdsu.edu","123 Fake St",3.6,50.0)
-List.add_to_list("Alpha",123456789, "email@sdsu.edu","123 Fake St",1.7,10.0)
-List.add_to_list("Indigo",123456789, "email@sdsu.edu","123 Fake St",2.9,80.0)
-List.add_to_list("Delta2",123456789, "email@sdsu.edu","123 Fake St",1.2,40.0)
-List.add_to_list("Delta3",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
-List.add_to_list("Jack",123456789, "email@sdsu.edu","123 Fake St",40.0,40.0)
+#List.add_to_list("Helo",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0)
+#List.add_to_list("SuperAlpha",123456789, "email@sdsu.edu","123 Fake St",0.8,00.0)
+#List.add_to_list("Gamma",123456789, "email@sdsu.edu","123 Fake St",3.8,50.0)
+#List.add_to_list("Charlie",123456789, "email@sdsu.edu","123 Fake St",1.6,30.0)
+#List.add_to_list("Bravo",123456789, "email@sdsu.edu","123 Fake St",1.8,20.0)
+#List.add_to_list("Gamma2",123456789, "email@sdsu.edu","123 Fake St",3.1,60.0)
+#List.add_to_list("SuperIndigo",123456789, "email@sdsu.edu","123 Fake St",3.1,150.0)
+#List.add_to_list("Fox",123456789, "email@sdsu.edu","123 Fake St",3.6,50.0)
+#List.add_to_list("Alpha",123456789, "email@sdsu.edu","123 Fake St",1.7,10.0)
+#List.add_to_list("Indigo",123456789, "email@sdsu.edu","123 Fake St",2.9,80.0)
+#List.add_to_list("Delta2",123456789, "email@sdsu.edu","123 Fake St",1.2,40.0)
+#List.add_to_list("Delta3",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
+#List.add_to_list("Jack",123456789, "email@sdsu.edu","123 Fake St",40.0,40.0)
 
+"""
+List.add_to_list("Diego",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
+List.add_to_list("Eric",123456789, "email@sdsu.edu","123 Fake St",1.2,50.0)
+List.add_to_list("Indie",123456789, "email@sdsu.edu","123 Fake St",3.2,80.0)
+List.add_to_list("Hank",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0)
+List.add_to_list("Aaron",123456789, "email@sdsu.edu","123 Fake St",0.8,00.0)
+List.add_to_list("Gary",123456789, "email@sdsu.edu","123 Fake St",3.8,50.0)
+List.add_to_list("Charlie",123456789, "email@sdsu.edu","123 Fake St",1.6,30.0)
+List.add_to_list("Brittany",123456789, "email@sdsu.edu","123 Fake St",1.8,20.0)
+List.add_to_list("Geoff",123456789, "email@sdsu.edu","123 Fake St",3.1,60.0)
+List.add_to_list("Issac",123456789, "email@sdsu.edu","123 Fake St",3.1,150.0)
+List.add_to_list("Frank",123456789, "email@sdsu.edu","123 Fake St",3.6,50.0)
+List.add_to_list("Alex",123456789, "email@sdsu.edu","123 Fake St",1.7,10.0)
+List.add_to_list("Ivan",123456789, "email@sdsu.edu","123 Fake St",2.9,80.0)
+List.add_to_list("Derek",123456789, "email@sdsu.edu","123 Fake St",1.2,40.0)
+List.add_to_list("Doug",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
+List.add_to_list("Jack",123456789, "email@sdsu.edu","123 Fake St",4.0,150.0)
+"""
 #a = 5
 #b = 5
 #This is a work of git
@@ -121,10 +140,10 @@ List.add_to_list("Jack",123456789, "email@sdsu.edu","123 Fake St",40.0,40.0)
 
 
 #List.pop()
-List.pop()
-List.pop()
+##List.pop()
+##List.pop()
 List.show_name_redID()
-print(List.highest_priority())
+#print(List.highest_priority())
 
 
 print("------------- done -------------")
