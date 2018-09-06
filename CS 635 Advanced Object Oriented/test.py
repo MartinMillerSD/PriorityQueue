@@ -11,25 +11,25 @@ class PriorityQueue:
         #self.master_list = position
         return
 
-    def add_to_list(self, name, redID, email, address, GPA, numberOfUnitsTaken):
-        if GPA > 4.0 or GPA < 0.0 or numberOfUnitsTaken > 150 or numberOfUnitsTaken < 0.0:
+    def add_to_list(self, name, redID, email, address, GPA, units_taken):
+        if GPA > 4.0 or GPA < 0.0 or units_taken > 150 or units_taken < 0.0:
             print("faill!")
             return
 
         #self.list_length = len(self.master_list)
         #self.list_length = self.list_length()
         #self.number = 0
-        self.number = self.binary_search(0,self.list_length(),GPA,numberOfUnitsTaken)
+        self.number = self.binary_search(0,self.list_length(),GPA,units_taken)
         #print("this is the number " + str(self.number))
-        self.master_list.insert(self.number,Students(name, redID, email, address, GPA, numberOfUnitsTaken))
+        self.master_list.insert(self.number,Students(name, redID, email, address, GPA, units_taken))
         return
 
-    def rank_calculator(self,GPA, numberOfUnitsTaken):
-        return (GPA/4.0)*.3 + (numberOfUnitsTaken/150.0)*.7
+    def rank_calculator(self,GPA, units_taken):
+        return (GPA/4.0)*.3 + (units_taken/150.0)*.7
 
-    def binary_search(self,start,end,GPA,numberOfUnitsTaken):
+    def binary_search(self,start,end,GPA,units_taken):
 
-        score = self.rank_calculator(GPA,numberOfUnitsTaken)
+        score = self.rank_calculator(GPA,units_taken)
         #print(score)
 
         if not self.master_list:
@@ -37,7 +37,7 @@ class PriorityQueue:
             return 0
 
         if (start+1) == end:
-            if (self.rank_calculator(self.master_list[start].GPA,self.master_list[start].numberOfUnitsTaken)) > score:
+            if (self.rank_calculator(self.master_list[start].GPA,self.master_list[start].units_taken)) > score:
                 #print("1 was used")
                 return start
             else:
@@ -50,13 +50,13 @@ class PriorityQueue:
         median = int(median)
         #print("start " + str(start) +" this is median " +str(median) + " and this is end " +str(end))
 
-        if (self.rank_calculator(self.master_list[median].GPA,self.master_list[median].numberOfUnitsTaken)) < score:
+        if (self.rank_calculator(self.master_list[median].GPA,self.master_list[median].units_taken)) < score:
             #print("recurse 1 was taken")
-            inner = self.binary_search(median,end,GPA,numberOfUnitsTaken)  
+            inner = self.binary_search(median,end,GPA,units_taken)  
             return inner
-        elif (self.rank_calculator(self.master_list[median].GPA,self.master_list[median].numberOfUnitsTaken)) > score:
+        elif (self.rank_calculator(self.master_list[median].GPA,self.master_list[median].units_taken)) > score:
             #print("recurse 2 was taken")
-            inner = self.binary_search(start,median,GPA,numberOfUnitsTaken)
+            inner = self.binary_search(start,median,GPA,units_taken)
             return inner
         else:
             #print("this was used")
@@ -82,13 +82,13 @@ class PriorityQueue:
 
 class Students:
 
-    def __init__(self, name, redID, email, address, GPA, numberOfUnitsTaken):
+    def __init__(self, name, redID, email, address, GPA, units_taken):
         self.name = name
         self.redID = redID
         self.email = email
         self.address = address
         self.GPA = GPA
-        self.numberOfUnitsTaken = numberOfUnitsTaken
+        self.units_taken = units_taken
         #self.rank = 0
 
 List = PriorityQueue()

@@ -20,17 +20,17 @@ class PriorityQueue:
     # The add_to_list method is used to add students, in a ranked order, to the priority queue.
     # The input parameters include the students information, however this info is passed to the
     # 'Student' structure before its added to the list.
-    def add_to_list(self, name, redID, email, address, GPA, numberOfUnitsTaken):
+    def add_to_list(self, name, redID, email, address, GPA, units_taken):
 
         # The GPA and number of units is checked before adding it to the list. The design decision was
         # made to raise a value error, because this can be checked for in our Unit test.
         if GPA > 4.0 or GPA < 0.0:
             raise ValueError("The GPA is too high or too low!")
-        elif numberOfUnitsTaken > 150 or numberOfUnitsTaken < 0.0:
+        elif units_taken > 150 or units_taken < 0.0:
             raise ValueError("The number of units taken is too high or too low!")
 
         # Add the new student to the end of the master_list. This is an O(1) complexity operation.
-        self.master_list.append(Students(name, redID, email, address, GPA, numberOfUnitsTaken))
+        self.master_list.append(Students(name, redID, email, address, GPA, units_taken))
 
         # Call the heap_queue() method to build a priority queue with a heap structure.
         self.heap_queue()
@@ -38,8 +38,8 @@ class PriorityQueue:
 
     # The rank calculator first normalizes the GPA and number of units, and then computes the rank.
     # The return value is rounded to 4 decimal places in increase readability for repeating decimals.
-    def rank_calculator(self, GPA, numberOfUnitsTaken):
-        return round((GPA/4.0)*.3 + (numberOfUnitsTaken/150)*.7,4)
+    def rank_calculator(self, GPA, units_taken):
+        return round((GPA/4.0)*.3 + (units_taken/150)*.7,4)
 
     # The heap_queue builds a heap function of the student objects, using the students rank as the 
     # metric. The heap is built with O(log n) complexity.
@@ -121,14 +121,14 @@ class Students:
 
     # The student structure is used as elements in the master list above it.
     # It contains all the parameters for each student, including their 'ranking' score.
-    def __init__(self, name, redID, email, address, GPA, numberOfUnitsTaken):
+    def __init__(self, name, redID, email, address, GPA, units_taken):
         self.name = name
         self.redID = redID
         self.email = email
         self.address = address
         self.GPA = GPA
-        self.numberOfUnitsTaken = numberOfUnitsTaken
-        self.rank = PriorityQueue.rank_calculator(self,GPA,numberOfUnitsTaken)
+        self.units_taken = units_taken
+        self.rank = PriorityQueue.rank_calculator(self,GPA,units_taken)
 
 '''
 List = PriorityQueue()
