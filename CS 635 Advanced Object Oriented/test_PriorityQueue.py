@@ -64,10 +64,10 @@ class TestPriorityQueue(unittest.TestCase):
                 self.assertGreaterEqual(x.rank,comparison_rank)
                 comparison_rank = x.rank
         
-        # First check to see if the master list is in increaseing order, then pop an element from 
+        # First check to see if the master list is in increasing order, then remove an element from 
         # the queue. Then recheck to make sure its in increasing order.
         compare_list_rank()
-        self.master_list.pop_from_queue()
+        self.master_list.remove_from_queue()
         compare_list_rank()
 
         # The tests below check for bad data entry that exceeds the input specifications.
@@ -107,13 +107,13 @@ class TestPriorityQueue(unittest.TestCase):
         for x in self.master_list.master_list:
             self.assertTrue(type(x.redID) == int)
 
-    # The test below checks the length of the master list, pops a value from it, then rechecks the 
+    # The test below checks the length of the master list, removes a value from it, then rechecks the 
     # length of the list. The length of the master list should be one less.
-    def test_pop_from_queue(self):
-        lengthlist_before_pop = len(self.master_list.master_list)
-        self.master_list.pop_from_queue()
-        lengthlist_after_pop = len(self.master_list.master_list)
-        self.assertEqual(lengthlist_before_pop,lengthlist_after_pop+1)
+    def test_remove_from_queue(self):
+        lengthlist_before_remove = len(self.master_list.master_list)
+        self.master_list.remove_from_queue()
+        lengthlist_after_remove = len(self.master_list.master_list)
+        self.assertEqual(lengthlist_before_remove,lengthlist_after_remove+1)
         
 
     def test_highest_priority(self):
@@ -124,7 +124,7 @@ class TestPriorityQueue(unittest.TestCase):
         self.assertEqual(self.master_list.highest_priority().name,"Zack")
         self.assertEqual(self.master_list.master_list[-1].name,"Zack")
 
-        # The highest priority method returns a Student element but does not pop it from the master
+        # The highest priority method returns a Student element but does not remove it from the master
         # list. The test below checks the size before and after the method.
         lengthlist_before = len(self.master_list.master_list)
         self.master_list.highest_priority()
@@ -145,18 +145,34 @@ class TestPriorityQueue_EmptyQueue(unittest.TestCase):
         self.master_list.add_to_list("Diego",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
         self.assertIsNotNone(self.master_list)
 
-    # Since the master list is empty, using the pop method should not change the length list.
-    # Additionally this list checks to see if any errors happen from using the pop method
+    # Since the master list is empty, using the remove method should not change the length list.
+    # Additionally this list checks to see if any errors happen from using the remove_from_queue method
     # on an empty list.
     def test_show_name(self):
-        lengthlist_before_pop = len(self.master_list.master_list)
-        self.master_list.pop_from_queue()
-        lengthlist_after_pop = len(self.master_list.master_list)
-        self.assertEqual(lengthlist_before_pop,lengthlist_after_pop)
+        lengthlist_before_remove = len(self.master_list.master_list)
+        self.master_list.remove_from_queue()
+        lengthlist_after_remove = len(self.master_list.master_list)
+        self.assertEqual(lengthlist_before_remove,lengthlist_after_remove)
 
     # The highest priority method should return 1 if the master list is empty.
     def test_highest_priority(self):
         self.assertEqual(self.master_list.highest_priority(),1)
+
+# This test class checks if there is only one element in the priority queue, and how it handles it.
+class TestPriorityQueue_OneElement(unittest.TestCase):
+
+    def setUp(self):
+        self.master_list = PriorityQueue.PriorityQueue()
+        self.master_list.add_to_list("Diego",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
+
+    def tearDown(self):
+        pass
+
+    # The priority queue should be empty after removing a student.
+    def test_show_name(self):
+        lengthlist_before_remove = len(self.master_list.master_list)
+        self.master_list.remove_from_queue()
+        self.assertEqual(lengthlist_before_remove-1,0)
 
 # Establish and run the test cases.
 if __name__ == '__main__':

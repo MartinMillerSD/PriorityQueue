@@ -72,8 +72,8 @@ class PriorityQueue:
         for x in self.master_list:
             print("Name: " + str(x.name.ljust(20)) + "\t\tRedID: " + str(x.redID))
 
-    def pop(self):
-        self.master_list.pop()
+    def remove(self):
+        self.master_list.remove()
         return
 
     def list_length(self):
@@ -109,9 +109,9 @@ List.add_to_list("Delta2",123456789, "email@sdsu.edu","123 Fake St",1.2,40.0)
 List.add_to_list("Delta3",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
 
 
-#List.pop()
-List.pop()
-List.pop()
+#List.remove()
+List.remove()
+List.remove()
 List.show_name_redID()
 
 
