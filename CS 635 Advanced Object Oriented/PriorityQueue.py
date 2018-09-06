@@ -17,7 +17,7 @@ class PriorityQueue:
         self.rank = 0
         return
 
-    # The add_to_list function is used to add students, in a ranked order, to the priority queue.
+    # The add_to_list method is used to add students, in a ranked order, to the priority queue.
     # The input parameters include the students information, however this info is passed to the
     # 'Student' structure before its added to the list.
     def add_to_list(self, name, redID, email, address, GPA, numberOfUnitsTaken):
@@ -29,7 +29,7 @@ class PriorityQueue:
         elif numberOfUnitsTaken > 150 or numberOfUnitsTaken < 0.0:
             raise ValueError("The number of units taken is too high or too low!")
 
-        # Add the new student to the end of the array. This is an O(1) complexity operation.
+        # Add the new student to the end of the master_list. This is an O(1) complexity operation.
         self.master_list.append(Students(name, redID, email, address, GPA, numberOfUnitsTaken))
 
         # Call the heap_queue() method to build a priority queue with a heap structure.
@@ -96,7 +96,8 @@ class PriorityQueue:
             print("Name: " + str(x.name.ljust(20)) + "\t\tRedID: " + str(x.redID))
 
     # The method remove_from_queue removes the element with the highest priority. 
-    # The design decision was made to not return the element. (See highest_priority method instead)
+    # The design decision was made to not return the element (See method highest_priority() instead).
+    # In Python pop() has O(1) complexity if its the last element.
     def remove_from_queue(self):
         if self.master_list:
             self.master_list.pop()
@@ -106,12 +107,13 @@ class PriorityQueue:
     def list_length(self):
         return len(self.master_list)
 
-    # The highest_priority returns the element with the highest priority. It doesnt not remove it from
-    # the master list. (See show_name_redID above.)
+    # The highest_priority returns the element with the highest priority. It does not remove it from
+    # the master list (See method pop() instead.)
     def highest_priority(self):
         if self.master_list:
             return self.master_list[len(self.master_list)-1]
         else:
+            # Return 1 if master_list is empty.
             return 1
 
 

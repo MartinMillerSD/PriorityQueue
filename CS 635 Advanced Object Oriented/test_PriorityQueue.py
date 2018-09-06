@@ -146,7 +146,7 @@ class TestPriorityQueue_EmptyQueue(unittest.TestCase):
         self.assertIsNotNone(self.master_list)
 
     # Since the master list is empty, using the remove method should not change the length list.
-    # Additionally this list checks to see if any errors happen from using the remove_from_queue method
+    # Additionally this list checks to see if any errors happen from using the method remove_from_queue 
     # on an empty list.
     def test_show_name(self):
         lengthlist_before_remove = len(self.master_list.master_list)
