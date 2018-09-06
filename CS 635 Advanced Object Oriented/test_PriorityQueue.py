@@ -18,8 +18,8 @@ class TestPriorityQueue(unittest.TestCase):
         # First establish the PriorityQueue class.
         self.master_list = PriorityQueue.PriorityQueue()
 
-        # Three different types of data is tested. The data below is random order.
-        # The names of the students are meant to alphabetical in the final priority queue.
+        # Three different types of data are tested. The data below is in random order.
+        # The names of the students are meant to be alphabetical in the final priority queue.
         self.master_list.add_to_list("Diego",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
         self.master_list.add_to_list("Eric",123456789, "email@sdsu.edu","123 Fake St",1.2,50.0)
         self.master_list.add_to_list("Indie",123456789, "email@sdsu.edu","123 Fake St",3.2,80.0)
@@ -45,7 +45,7 @@ class TestPriorityQueue(unittest.TestCase):
         self.master_list.add_to_list("Charlie",123456789, "email@sdsu.edu","123 Fake St",1.6,30.0)
         self.master_list.add_to_list("Charlie",123456789, "email@sdsu.edu","123 Fake St",1.6,30.0)
 
-        # The data below is intentionally backwards order to see if its sorts correctly.
+        # The data below is intentionally backwards in order to see if its sorts correctly.
         self.master_list.add_to_list("Diego",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
         self.master_list.add_to_list("Charlie",123456789, "email@sdsu.edu","123 Fake St",1.6,30.0)
         self.master_list.add_to_list("Brittany",123456789, "email@sdsu.edu","123 Fake St",1.8,20.0)
@@ -146,7 +146,7 @@ class TestPriorityQueue_EmptyQueue(unittest.TestCase):
         self.assertIsNotNone(self.master_list)
 
     # Since the master list is empty, using the remove method should not change the length list.
-    # Additionally this list checks to see if any errors happen from using the method remove_from_queue 
+    # Additionally this list checks to see if any errors happen from using the method remove_from_queue() 
     # on an empty list.
     def test_show_name(self):
         lengthlist_before_remove = len(self.master_list.master_list)
@@ -154,7 +154,7 @@ class TestPriorityQueue_EmptyQueue(unittest.TestCase):
         lengthlist_after_remove = len(self.master_list.master_list)
         self.assertEqual(lengthlist_before_remove,lengthlist_after_remove)
 
-    # The highest priority method should return 1 if the master list is empty.
+    # The highest_priority() method should return 1 if the master list is empty.
     def test_highest_priority(self):
         self.assertEqual(self.master_list.highest_priority(),1)
 
