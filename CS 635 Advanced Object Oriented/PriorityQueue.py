@@ -181,6 +181,6 @@ List.add_to_list("Jack",123456789, "email@sdsu.edu","123 Fake St",4.0,150.0)
 ##List.remove()
 ##List.remove()
 List.show_name_redID()
-print(List.highest_priority())
-'''
+#print(List.highest_priority())
 
+'''

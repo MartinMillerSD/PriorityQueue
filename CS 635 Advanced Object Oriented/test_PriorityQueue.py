@@ -131,6 +131,9 @@ class TestPriorityQueue(unittest.TestCase):
         lengthlist_after = len(self.master_list.master_list)
         self.assertEqual(lengthlist_before,lengthlist_after)
 
+    #def test_show_name_redID(self):
+        #self.master_list.show_name_redID()
+
 # A seperate class is created to test methods for an empty array.
 class TestPriorityQueue_EmptyQueue(unittest.TestCase):
 
@@ -157,6 +160,7 @@ class TestPriorityQueue_EmptyQueue(unittest.TestCase):
     # The highest_priority() method should return 1 if the master list is empty.
     def test_highest_priority(self):
         self.assertEqual(self.master_list.highest_priority(),1)
+
 
 # This test class checks if there is only one element in the priority queue, and how it handles it.
 class TestPriorityQueue_OneElement(unittest.TestCase):
