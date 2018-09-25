@@ -29,7 +29,7 @@ class TestPriorityQueue(unittest.TestCase):
         self.queue.add_to_list(Student("Diego",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0))
         self.queue.add_to_list(Student("Indie",123456789, "email@sdsu.edu","123 Fake St",3.2,80.0))
         self.queue.add_to_list(Student("Hank",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0))
-        self.queue.add_to_list(Student("Aaron",123456789, "email@sdsu.edu","123 Fake St",0.8,00.0))
+        self.queue.add_to_list(Student("Aaron",123456789, "email@sdsu.edu","123 Fake St",4.0,00.0))
         self.queue.add_to_list(Student("Gary",123456789, "email@sdsu.edu","123 Fake St",3.8,50.0))
         self.queue.add_to_list(Student("Charlie",123456789, "email@sdsu.edu","123 Fake St",1.6,30.0))
         self.queue.add_to_list(Student("Charlie",123456789, "email@sdsu.edu","123 Fake St",1.6,30.0))
@@ -120,6 +120,14 @@ class TestPriorityQueue(unittest.TestCase):
     #def test_show_name_redID(self):
         #self.queue.show_name_redID()
 
+    def test_strategy(self):
+
+        self.queue.show_name_rank()
+        strategy_one_highest = self.queue.highest_priority()
+        self.queue.changeStrategy(ConcreteStrategyTwo())
+        strategy_two_highest = self.queue.highest_priority()
+        self.assertFalse(strategy_one_highest == strategy_two_highest)
+
 # A seperate class is created to test methods for an empty array.
 class TestPriorityQueue_EmptyQueue(unittest.TestCase):
 
@@ -147,12 +155,13 @@ class TestPriorityQueue_EmptyQueue(unittest.TestCase):
     #def test_highest_priority(self):
      #   self.assertEqual(self.queue.highest_priority(),1)
 
-    def test_strategy(self):
 
-        temp = self.queue.highest_priority()
-        self.queue.changeStrategy(ConcreteStrategyTwo())
-        temp2 = self.queue.highest_priority()
-        self.assertFalse(temp == temp)
+
+    #def test_Command(self):
+
+     #   cut  = CutCommand(List, 5)
+     #   client = Invoker()
+      #  client.store_and_execute(cut)
 
 
 

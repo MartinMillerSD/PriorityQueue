@@ -8,7 +8,7 @@
 #Date: September 5th, 2018
 
 import math
-import copy
+#import copy
 
 class Strategy( object ):
     def __init__( self, aStrategicAlternative ):
@@ -46,6 +46,11 @@ class PriorityQueue(Strategy):
     def add_to_list(self, object):
         self.heappush(object)
         return self.queue
+
+    def re_rank(self):
+        for x in self.queue:
+            x.rank = self.calculate_rank(x)
+        return
 
     def heappush(self, insert):
         insert.rank = self.calculate_rank(insert)
@@ -85,6 +90,7 @@ class PriorityQueue(Strategy):
         return self.queue.pop()
 
     def heap_down(self,index):
+        self.re_rank()
         end_index = int(len(self.queue)-1)
         if index == end_index:
             #print("first return")
@@ -104,6 +110,7 @@ class PriorityQueue(Strategy):
                 self.heap_down(index+2)
 
     def highest_priority(self):
+        self.heap_down(0) #idk if needed
         if self.queue:
             return self.queue[0]
 
@@ -112,6 +119,16 @@ class PriorityQueue(Strategy):
 
     def __str__(self):
         return  list(map(lambda x: (x.redID,x.name), self.queue))
+
+    def toArray(self):
+        array = []
+        for x in self.queue:
+            array.append(x.name)
+        return array
+
+    def str(self):
+        
+        return  " ".join(map(str, list(map(lambda x: x.name, self.queue))))
 
 class Student():
 
@@ -188,12 +205,14 @@ class Invoker:
 
 List  = PriorityQueue()
 List.remove_from_queue()
-List.changeStrategy(ConcreteStrategyTwo())
+#List.changeStrategy(ConcreteStrategyTwo())
 aStudent = Student("Hank",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0)
 List.add_to_list(aStudent)
-aStudent = Student("Hank",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0)
+aStudent = Student("Hank",123456789, "email@sdsu.edu","123 Fake St",4.0,70.0)
 List.add_to_list(aStudent)
 print(List.__str__())
+print(List.str())
+
 '''
 #ptest = PriorityQueue()
 
@@ -213,6 +232,12 @@ aStudent = Student("GaryHigh",123456789, "email@sdsu.edu","123 Fake St",3.9,150.
 List.add_to_list(aStudent)
 aStudent = Student("Brittany",123456789, "email@sdsu.edu","123 Fake St",1.8,20.0)
 List.add_to_list(aStudent)
+List.show_name_rank()
+List.changeStrategy(ConcreteStrategyTwo())
+aStudent = Student("Brittany",123456789, "email@sdsu.edu","123 Fake St",1.8,20.0)
+List.add_to_list(aStudent)
+List.highest_priority()
+print("------")
 List.show_name_rank()
 
 List.add_to_list(aStudent)
