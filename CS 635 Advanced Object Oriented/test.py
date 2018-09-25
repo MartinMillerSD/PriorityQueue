@@ -4,11 +4,11 @@
 
 class PriorityQueue:
 
-    master_list = []
+    queue = []
     #list_length = 0.0
 
     def __init__(self):
-        #self.master_list = position
+        #self.queue = position
         return
 
     def add_to_list(self, name, redID, email, address, GPA, units_taken):
@@ -16,12 +16,12 @@ class PriorityQueue:
             print("faill!")
             return
 
-        #self.list_length = len(self.master_list)
+        #self.list_length = len(self.queue)
         #self.list_length = self.list_length()
         #self.number = 0
         self.number = self.binary_search(0,self.list_length(),GPA,units_taken)
         #print("this is the number " + str(self.number))
-        self.master_list.insert(self.number,Students(name, redID, email, address, GPA, units_taken))
+        self.queue.insert(self.number,Students(name, redID, email, address, GPA, units_taken))
         return
 
     def rank_calculator(self,GPA, units_taken):
@@ -32,12 +32,12 @@ class PriorityQueue:
         score = self.rank_calculator(GPA,units_taken)
         #print(score)
 
-        if not self.master_list:
+        if not self.queue:
             #print("should only happen once")
             return 0
 
         if (start+1) == end:
-            if (self.rank_calculator(self.master_list[start].GPA,self.master_list[start].units_taken)) > score:
+            if (self.rank_calculator(self.queue[start].GPA,self.queue[start].units_taken)) > score:
                 #print("1 was used")
                 return start
             else:
@@ -50,11 +50,11 @@ class PriorityQueue:
         median = int(median)
         #print("start " + str(start) +" this is median " +str(median) + " and this is end " +str(end))
 
-        if (self.rank_calculator(self.master_list[median].GPA,self.master_list[median].units_taken)) < score:
+        if (self.rank_calculator(self.queue[median].GPA,self.queue[median].units_taken)) < score:
             #print("recurse 1 was taken")
             inner = self.binary_search(median,end,GPA,units_taken)  
             return inner
-        elif (self.rank_calculator(self.master_list[median].GPA,self.master_list[median].units_taken)) > score:
+        elif (self.rank_calculator(self.queue[median].GPA,self.queue[median].units_taken)) > score:
             #print("recurse 2 was taken")
             inner = self.binary_search(start,median,GPA,units_taken)
             return inner
@@ -64,21 +64,21 @@ class PriorityQueue:
 
 
     def show_name(self):
-        #print(self.master_list)
-        for x in self.master_list:
+        #print(self.queue)
+        for x in self.queue:
             print(x.name)
 
     def show_name_redID(self):
-        for x in self.master_list:
+        for x in self.queue:
             print("Name: " + str(x.name.ljust(20)) + "\t\tRedID: " + str(x.redID))
 
     def remove(self):
-        self.master_list.remove()
+        self.queue.remove()
         return
 
     def list_length(self):
-        print(len(self.master_list))
-        return len(self.master_list)
+        print(len(self.queue))
+        return len(self.queue)
 
 class Students:
 

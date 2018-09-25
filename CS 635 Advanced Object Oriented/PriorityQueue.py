@@ -13,7 +13,7 @@ class PriorityQueue:
     # Since this is a priority queue, a "master list" is required to keep track of the students.
     # The list is defined as empty. The rank will be used to prioritize the students.
     def __init__(self):
-        self.master_list = []
+        self.queue = []
         self.rank = 0
         return
 
@@ -29,12 +29,12 @@ class PriorityQueue:
         elif units_taken > 150 or units_taken < 0.0:
             raise ValueError("The number of units taken is too high or too low!")
 
-        # Add the new student to the end of the master_list. This is an O(1) complexity operation.
-        self.master_list.append(Students(name, redID, email, address, GPA, units_taken))
+        # Add the new student to the end of the queue. This is an O(1) complexity operation.
+        self.queue.append(Students(name, redID, email, address, GPA, units_taken))
 
         # Call the heap_queue() method to build a priority queue with a heap structure.
         self.heap_queue()
-        return self.master_list
+        return self.queue
 
     # The rank calculator first normalizes the GPA and number of units, and then computes the rank.
     # The return value is rounded to 4 decimal places in increase readability for repeating decimals.
@@ -55,22 +55,22 @@ class PriorityQueue:
             right_child = 2 * i + 2     
         
             # Check if the left child is larger then the root.
-            if left_child < n and self.master_list[largest_node].rank < self.master_list[left_child].rank:
+            if left_child < n and self.queue[largest_node].rank < self.queue[left_child].rank:
                 largest_node = left_child
         
             # Check if the right child is larger then the root.
-            if right_child < n and self.master_list[largest_node].rank < self.master_list[right_child].rank:
+            if right_child < n and self.queue[largest_node].rank < self.queue[right_child].rank:
                 largest_node = right_child
         
             # If the right or left child are larger, change the placement with the root.
             if largest_node != i:
-                self.master_list[i],self.master_list[largest_node] = self.master_list[largest_node],self.master_list[i]  # swap
+                self.queue[i],self.queue[largest_node] = self.queue[largest_node],self.queue[i]  # swap
 
                 # Continue heap recursion on the sub-heap. (Reduced in tier size)
                 heap_recursion(self,n, largest_node)
         
         # The heap is constructed as a array, find the length of that array.
-        end = len(self.master_list)
+        end = len(self.queue)
         start = end // 2 - 1 
 
         # The first objective is to build a heap structure. For the first for-loop this is 
@@ -81,17 +81,17 @@ class PriorityQueue:
         # Iterate through the heap.
         for i in range(end-1, 0, -1):
             # The current node trades places with the root, and the recursive heap function is called.
-            self.master_list[i], self.master_list[0] = self.master_list[0], self.master_list[i]
+            self.queue[i], self.queue[0] = self.queue[0], self.queue[i]
             heap_recursion(self,i, 0)
 
     # The show_name function simple prints the names.
     def show_name(self):
-        for x in self.master_list:
+        for x in self.queue:
             print(x.name)
 
     # The show_name_redID function prints the names and redIDs of all the Student objects in master list.
     def show_name_redID(self):
-        for x in self.master_list:
+        for x in self.queue:
             # The .ljust(20) method is used for formatting purposes to make the data more readable.
             print("Name: " + str(x.name.ljust(20)) + "\t\tRedID: " + str(x.redID))
 
@@ -99,21 +99,21 @@ class PriorityQueue:
     # The design decision was made to not return the element (See method highest_priority() instead).
     # In Python pop() has O(1) complexity if its the last element.
     def remove_from_queue(self):
-        if self.master_list:
-            self.master_list.pop()
+        if self.queue:
+            self.queue.pop()
         return
 
     # Simple function to find the length of the master list.
     def list_length(self):
-        return len(self.master_list)
+        return len(self.queue)
 
     # The highest_priority returns the element with the highest priority. It does not remove it from
     # the master list (See method pop() instead.)
     def highest_priority(self):
-        if self.master_list:
-            return self.master_list[len(self.master_list)-1]
+        if self.queue:
+            return self.queue[len(self.queue)-1]
         else:
-            # Return 1 if master_list is empty.
+            # Return 1 if queue is empty.
             return 1
 
 

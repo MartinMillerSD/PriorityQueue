@@ -7,50 +7,49 @@
 #file: PriorityQueue.py
 #Date: September 5th, 2018
 
+import math
+import copy
+
 class Strategy( object ):
     def __init__( self, aStrategicAlternative ):
         self.currentStrategy = ConcreteStrategyOne()
         self.max_GPA = 4.0
         self.max_units_taken = 150.0
-    def calculate_rank( self, someArg ):
-        return self.currentStrategy.calculate_rank( self, someArg)
+    def calculate_rank( self, comparable_object ):
+        if (0.0 <= comparable_object.GPA <= self.max_GPA and 0.0 <= comparable_object.units_taken <= self.max_units_taken) == True:
+            return self.currentStrategy.calculate_rank( self, comparable_object)
+        else:
+            raise ValueError
+
     def changeStrategy(self, newStrategy):
         self.currentStrategy = newStrategy
 
 class ConcreteStrategyOne():
-    def calculate_rank( self, theUsefulThing ,someArg):
-        return (someArg.GPA/theUsefulThing.max_GPA)*.3 + (someArg.units_taken/theUsefulThing.max_units_taken)*.7
+    def calculate_rank( self, Strategy ,comparable_object):
+        return ((comparable_object.GPA/Strategy.max_GPA)*.3 + (comparable_object.units_taken/Strategy.max_units_taken)*.7)
 
 class ConcreteStrategyTwo():
-    def calculate_rank( self, theUsefulThing, someArg ):
-        return (someArg.GPA/theUsefulThing.max_GPA)
+    def calculate_rank( self, Strategy, comparable_object ):
+        return (comparable_object.GPA/Strategy.max_GPA)*1.0
 
 class ConcreteStrategyThree():
-    def calculate_rank( self, theUsefulThing, someArg ):
-        return (someArg.units_taken/theUsefulThing.max_units_taken)
+    def calculate_rank( self, Strategy, comparable_object ):
+        return (comparable_object.units_taken/Strategy.max_units_taken)*1.0
 
 class PriorityQueue(Strategy):
 
-    def __init__(self, master_list = []):
-        self.master_list = []
+    def __init__(self, queue = []):
+        self.queue = []
         super().__init__(self)
-        #self.rank = 0
         return
 
     def add_to_list(self, object):
-        print("in add to list ---")
-        print(object.rank)
-        self.heap_queue2(object)
-        return self.master_list
+        self.heappush(object)
+        return self.queue
 
-    def heap_queue2(self, insert):
-        print(insert.rank)
+    def heappush(self, insert):
         insert.rank = self.calculate_rank(insert)
-        print("-----> this is rank")
-        print(insert.rank)
-        self.master_list.append(insert) 
-        import math
-
+        self.queue.append(insert) 
         def heapify(self,end_index):
 
             parent_index = int(math.ceil(end_index/2-1))
@@ -58,124 +57,64 @@ class PriorityQueue(Strategy):
 
             if parent_index == -1:
                 return
-            print(self.master_list[parent_index].rank)
-            if self.master_list[parent_index].rank < self.master_list[end_index].rank:
-                self.master_list[parent_index].rank, self.master_list[end_index].rank = self.master_list[end_index].rank, self.master_list[parent_index].rank
-                print("lalala")
+            if self.queue[parent_index].rank <= self.queue[end_index].rank:
+                self.queue[parent_index], self.queue[end_index] = self.queue[end_index], self.queue[parent_index]
 
             heapify(self,parent_index)
 
-
-
-        end_index = int(len(self.master_list)-1)
-        parent_index = int(math.ceil(end_index/2-1))
-        
-
-        print("parent index")
-        print (parent_index)
-
-        print("end index")
-        print (end_index)
-        print("--------")
+        end_index = int(len(self.queue)-1)    
         heapify(self,end_index)
-
-    def heap_queue(self):
-        
-        def heap_recursion(self,n, i):
-            
-            largest_node = i 
-            left_child = 2 * largest_node + 1     
-            right_child = 2 * i + 2     
-        
-            if left_child < n and self.master_list[largest_node].rank < self.master_list[left_child].rank:
-                largest_node = left_child
-        
-            if right_child < n and self.master_list[largest_node].rank < self.master_list[right_child].rank:
-                largest_node = right_child
-        
-            if largest_node != i:
-                self.master_list[i],self.master_list[largest_node] = self.master_list[largest_node],self.master_list[i]  # swap
-
-                heap_recursion(self,n, largest_node)
-        
-        end = len(self.master_list)
-        start = end // 2 - 1 
-
-        for i in range(start, -1, -1):
-            heap_recursion(self,end, i)
-
-        for i in range(end-1, 0, -1):
-            self.master_list[i], self.master_list[0] = self.master_list[0], self.master_list[i]
-            heap_recursion(self,i, 0)
         
     def show_name(self):
-        for x in self.master_list:
+        for x in self.queue:
             print(x.name)
 
-    # The show_name_redID function prints the names and redIDs of all the Student objects in master list.
-    def show_name_redID(self):
-        for x in self.master_list:
-            # The .ljust(20) method is used for formatting purposes to make the data more readable.
-            print("Name: " + str(x.name.ljust(20)) + "\t\tRedID: " + str(x.rank))
+    def show_name_rank(self):
+        for x in self.queue:
+            print("Name: " + str(x.name.ljust(20)) + "\t\tRank: " + str(x.rank))
 
-    # The method remove_from_queue removes the element with the highest priority. 
-    # The design decision was made to not return the element (See method highest_priority() instead).
-    # In Python pop() has O(1) complexity if its the last element.
     def remove_from_queue(self):
         
-        def heap_down(self,index):
-            end_index = int(len(self.master_list)-1)
-            if index == end_index:
-                print("first return")
-                return
-
-            #print("got here at all")
-            #print(index)
-            #print(end_index)
-            if index + 1 == end_index:
-                if self.master_list[index].rank > self.master_list[end_index].rank:
-                    self.master_list[index].rank, self.master_list[end_index].rank = self.master_list[end_index].rank, self.master_list[index].rank
-                    heap_down(self,index+1)
-
-            if index +2 <= end_index:
-                if self.master_list[index+1].rank > self.master_list[index+2].rank:
-                        self.master_list[index].rank, self.master_list[index+1].rank = self.master_list[index+1].rank, self.master_list[index].rank
-                        heap_down(self,index+1)
-                else:
-                        self.master_list[index].rank, self.master_list[index+2].rank = self.master_list[index+2].rank, self.master_list[index].rank
-                        heap_down(self,index+2)
-            #heap_down(self, index)
+        if not self.queue:
+            return
 
         index = 0
-        end_index = int(len(self.master_list)-1)
-        self.master_list[0].rank, self.master_list[end_index].rank = self.master_list[end_index].rank, self.master_list[0].rank
-        heap_down(self,index)
-        return self.master_list.pop()
+        end_index = int(len(self.queue)-1)
+        self.queue[0], self.queue[end_index] = self.queue[end_index], self.queue[0]
+        self.heap_down(index)
+        return self.queue.pop()
 
-    def remove_from_queueN(self, n):
-        if self.master_list:
-            for x in range(0,n):
-                self.master_list.pop()
-        return
+    def heap_down(self,index):
+        end_index = int(len(self.queue)-1)
+        if index == end_index:
+            #print("first return")
+            return
 
-    # Simple function to find the length of the master list.
-    def list_length(self):
-        return len(self.master_list)
+        if index + 1 == end_index:
+            if self.queue[index].rank > self.queue[end_index].rank:
+                self.queue[index], self.queue[end_index] = self.queue[end_index], self.queue[index]
+                self.heap_down(index+1)
 
-    # The highest_priority returns the element with the highest priority. It does not remove it from
-    # the master list (See method pop() instead.)
+        if index +2 <= end_index:
+            if self.queue[index+1].rank > self.queue[index+2].rank:
+                self.queue[index], self.queue[index+1] = self.queue[index+1], self.queue[index]
+                self.heap_down(index+1)
+            else:
+                self.queue[index], self.queue[index+2] = self.queue[index+2], self.queue[index]
+                self.heap_down(index+2)
+
     def highest_priority(self):
-        if self.master_list:
-            return self.master_list[len(self.master_list)-1]
-        else:
-            # Return 1 if master_list is empty.
-            return 1
+        if self.queue:
+            return self.queue[0]
 
+    def pop(self):
+        self.queue.pop()
 
-class Student:
+    def __str__(self):
+        return  list(map(lambda x: (x.redID,x.name), self.queue))
 
-    # The student structure is used as elements in the master list above it.
-    # It contains all the parameters for each student, including their 'ranking' score.
+class Student():
+
     def __init__(self, name, redID, email, address, GPA, units_taken):
         self.name = name
         self.redID = redID
@@ -185,101 +124,56 @@ class Student:
         self.units_taken = units_taken
         self.rank = 0
 
-'''
-        self.rank = self.rank_calculator(GPA,units_taken)
+class Iterator(PriorityQueue):
 
-    def rank_calculator(self, GPA, units_taken):
-
-        max_GPA = 4.0
-        max_units_taken = 150
-        if GPA > max_GPA or GPA < 0.0:
-            raise ValueError("The GPA is too high or too low!")
-        elif units_taken > max_units_taken or units_taken < 0.0:
-            raise ValueError("The number of units taken is too high or too low!")
-        return round((GPA/max_GPA)*.3 + (units_taken/max_units_taken)*.7,4)
-        '''
-
-##class RankCalculator()
-class Iterator():
-
-    def __init__(self, test):
-        import copy
-        self.list = copy.deepcopy(test)
+    def __init__(self, iterator_list):
+        super().__init__(self)
+        self.n = -1
+        self.iterator_list = iterator_list
         return
 
-    def next(self):
-        #for x in self.list:
-        #print(len(self.list))
-        print(type(self.list))
-        for x in self.list.master_list:
-            print(x.name)
-        return
+    def __next__(self):
+        self.n = self.n + 1
+        return self.iterator_list.queue[self.n].name
 
-class ScreenCommand:
+class Command:
 
-    def __init__(self, priorityQueue):
-        self.priorityQueue = priorityQueue
-        import copy
-        #self.previous_state = copy.deepcopy(priorityQueue.master_list)
-        #self.previous_state = []
-        #print(len(self.previous_state))
-        #self.screen = screen
+    def __init__(self, object):
+        self.object = object
 
-        def execute(self):
-            pass
-        
-        def undo(self):
-            pass
-
-class CutCommand(ScreenCommand):
-    def __init__(self, priorityQueue, n = 0):
-        super().__init__(priorityQueue)
+class CutCommand(Command):
+    def __init__(self, object, n = 0):
+        super().__init__(object)
         self.n = n
-        import copy
-        self.previous_state = copy.deepcopy(priorityQueue.master_list)
+        self.cut_command_stack = []
+        self.number_removed = []
 
     def execute(self):
-        import copy
-        #self.previous_state.append(self.priorityQueue.master_list[:])
-        print(len(self.previous_state))
-        self.priorityQueue.remove_from_queueN(n = self.n)
+        self.number_removed.append(self.n)
+        for x in range(self.n):
+            self.cut_command_stack.append(self.object.remove_from_queue())
 
     def undo(self):
-        print("this was called")
-        #print(len(self.priorityQueue))
-        #print(len(self.previous_state))
-        import copy
-        #self.priorityQueue.master_list = copy.deepcopy(self.previous_state.pop())
-        self.priorityQueue.master_list = copy.deepcopy(self.previous_state)
+        print(len(self.cut_command_stack))
+        for x in range(self.number_removed.pop()):
+            self.object.add_to_list(self.cut_command_stack.pop())
 
-class AddCommand(ScreenCommand):
-    def __init__(self, priorityQueue, Student):
-        super().__init__(priorityQueue)
-        self.Student = Student
-        import copy
-        self.previous_state = copy.deepcopy(self.priorityQueue.master_list)
-        print(len(self.previous_state))
+class AddCommand(Command):
+    def __init__(self, object, student_list):
+        super().__init__(object)
+        self.student_list = student_list
+        self.number_added = []
 
     def execute(self):
-        import copy
-        #self.previous_state.append(self.priorityQueue.master_list[:])
-        #print(len(self.previous_state))
-        self.priorityQueue.add_to_list(self.Student)
-        #self.priorityQueue.remove_from_queueN(n = self.n)
+        self.number_added.append(len(self.student_list))
+        for x in range(0,len(self.student_list)):
+            self.object.add_to_list(self.student_list.pop())
 
     def undo(self):
-        print("this was called")
-        #print(len(self.priorityQueue))
-        #print(len(self.previous_state))
-        import copy
-        #self.priorityQueue.master_list = copy.deepcopy(self.previous_state.pop())
-        print(len(self.previous_state))
-        #del self.priorityQueue.master_list
-        self.priorityQueue.master_list = copy.deepcopy(self.previous_state)
+        for x in range(0,self.number_added.pop()):
+            self.object.pop()
 
-
-
-class ScreenInvoker:
+class Invoker:
     def __init__(self):
         self.history = []
 
@@ -292,25 +186,37 @@ class ScreenInvoker:
             self.history.pop().undo()
 
 
+List  = PriorityQueue()
+List.remove_from_queue()
+List.changeStrategy(ConcreteStrategyTwo())
+aStudent = Student("Hank",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0)
+List.add_to_list(aStudent)
+aStudent = Student("Hank",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0)
+List.add_to_list(aStudent)
+print(List.__str__())
+'''
 #ptest = PriorityQueue()
 
 #https://www.youtube.com/watch?v=Fc1fLEk_Kr0
 #https://www.youtube.com/watch?v=m9KCiLrCErs
 #https://www.youtube.com/watch?v=WCm3TqScBM8&t=1s
-List = PriorityQueue()
+#List = PriorityQueue()
 aStudent = Student("Hank",123456789, "email@sdsu.edu","123 Fake St",3.0,70.0)
 List.add_to_list(aStudent)
 aStudent = Student("Indie",123456789, "email@sdsu.edu","123 Fake St",3.2,80.0)
 List.add_to_list(aStudent)
 aStudent = Student("Eric",123456789, "email@sdsu.edu","123 Fake St",1.2,50.0)
 List.add_to_list(aStudent)
-aStudent = Student("Aaron",123456789, "email@sdsu.edu","123 Fake St",0.8,00.0)
+aStudent = Student("Aaron",123456789, "email@sdsu.edu","123 Fake St",4.0,00.0)
 List.add_to_list(aStudent)
-aStudent = Student("Gary",123456789, "email@sdsu.edu","123 Fake St",3.8,50.0)
+aStudent = Student("GaryHigh",123456789, "email@sdsu.edu","123 Fake St",3.9,150.0)
 List.add_to_list(aStudent)
 aStudent = Student("Brittany",123456789, "email@sdsu.edu","123 Fake St",1.8,20.0)
 List.add_to_list(aStudent)
-aStudent = Student("Geoff",123456789, "email@sdsu.edu","123 Fake St",3.1,60.0)
+List.show_name_rank()
+
+List.add_to_list(aStudent)
+aStudent = Student("Geofflow",123456789, "email@sdsu.edu","123 Fake St",0.1,0.0)
 List.add_to_list(aStudent)
 aStudent = Student("Issac",123456789, "email@sdsu.edu","123 Fake St",3.1,150.0)
 List.add_to_list(aStudent)
@@ -318,38 +224,70 @@ aStudent = Student("Frank",123456789, "email@sdsu.edu","123 Fake St",3.6,50.0)
 List.add_to_list(aStudent)
 aStudent = Student("Alex",123456789, "email@sdsu.edu","123 Fake St",1.7,10.0)
 List.add_to_list(aStudent)
-'''
-aStudent = Student("Charlie",123456789, "email@sdsu.edu","123 Fake St",1.6,30.0)
-List.add_to_list(aStudent)
 
-List.add_to_list(aStudent)
-List.add_to_list(aStudent)
-List.add_to_list(aStudent)
+List.show_name_rank()
+
 #List.add_to_list(aStudent)
 #List.remove_from_queueN(2)
-'''
+
 #List.show_name_redID()
 #print("-----------------")
 #List.remove_from_queue()
 #List.show_name_redID()
 #print("------------")
-#iter  = Iterator(List)
-#print(str(iter.next()))
+
+iter  = Iterator(List)
+print(iter.__next__())
 
 #print(List)
-#for x in List.master_list:
+#for x in List.queue:
 #    print(x)
-'''
-
-cut  = CutCommand(List, 2)
-client = ScreenInvoker()
+print("-------")
+List.show_name()
+cut  = CutCommand(List, 5)
+client = Invoker()
 client.store_and_execute(cut)
-print("------------------- removed 2")
+print("------------------- removed 5")
+List.show_name_rank()
+
+
+
+#List.show_name()
+cut2  = CutCommand(List, 3)
+#client = Invoker()
+client.store_and_execute(cut2)
+print("------------------- removed 3")
+List.show_name_rank()
+
+print("--------------- did undo 3")
+client.undo_last()
+List.show_name_rank()
+
+print("--------------- did undo 5")
+client.undo_last()
+List.show_name_rank()
+
+print("-------- added 3 more below --- ")
+Student_List = [Student("test1",123456789, "email@sdsu.edu","123 Fake St",3.6,50.0), Student("test2",123456789, "email@sdsu.edu","123 Fake St",1.7,10.0), Student("test3",123456789, "email@sdsu.edu","123 Fake St",1.8,20.0)]
+add = AddCommand(List, Student_List)
+client.store_and_execute(add)
+#List.show_name()
+
+Student_List = [Student("test4",123456789, "email@sdsu.edu","123 Fake St",4.0,150.0), Student("test5",123456789, "email@sdsu.edu","123 Fake St",1.7,10.0)]
+add = AddCommand(List, Student_List)
+client.store_and_execute(add)
+List.show_name()
+List.show_name_rank()
+
+print(" --- undid the add ")
+client.undo_last()
 List.show_name()
 
-#print("--------------- added 2")
-#client.undo_last()
-#List.show_name()
+print(" --- undid the add 2")
+client.undo_last()
+List.show_name()
+List.show_name_rank()
+
 
 aStudent2 = Student("Margin",123456789, "email@sdsu.edu","123 Fake St",1.2,40.0)
 add2  = AddCommand(List, aStudent2)
@@ -365,9 +303,7 @@ List.show_name()
 print("---- what happens")
 client.undo_last()
 List.show_name()
-'''
 
-'''
 List = PriorityQueue()
 
 
@@ -389,7 +325,7 @@ List.add_to_list("Delta3",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
 #List.add_to_list("Jack",123456789, "email@sdsu.edu","123 Fake St",40.0,40.0)
 
 
-"""
+
 List.add_to_list("Diego",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
 List.add_to_list("Eric",123456789, "email@sdsu.edu","123 Fake St",1.2,50.0)
 List.add_to_list("Indie",123456789, "email@sdsu.edu","123 Fake St",3.2,80.0)
@@ -406,7 +342,7 @@ List.add_to_list("Ivan",123456789, "email@sdsu.edu","123 Fake St",2.9,80.0)
 List.add_to_list("Derek",123456789, "email@sdsu.edu","123 Fake St",1.2,40.0)
 List.add_to_list("Doug",123456789, "email@sdsu.edu","123 Fake St",1.0,40.0)
 List.add_to_list("Jack",123456789, "email@sdsu.edu","123 Fake St",4.0,150.0)
-"""
+
 #a = 5
 #b = 5
 #This is a work of git
@@ -420,5 +356,6 @@ List.add_to_list("Jack",123456789, "email@sdsu.edu","123 Fake St",4.0,150.0)
 ##List.remove()
 List.show_name_redID()
 #print(List.highest_priority())
+
 
 '''
